@@ -12,7 +12,7 @@ class ToDoController extends Controller
      */
     public function index()
     {
-        return ('<h1> I am from todo controller </h1>');
+        // return ('<h1> I am from todo controller </h1>');
     }
 
     /**
@@ -28,7 +28,13 @@ class ToDoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'tasks' => 'required|string|max:255',
+        ]);
+
+        $request->user()->todos()->create($validated);
+
+        return redirect(route('dashboard'));
     }
 
     /**
