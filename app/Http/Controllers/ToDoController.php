@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chirp;
+use App\Models\ToDo;
 use Illuminate\Http\Request;
 
-class ChirpController extends Controller
+class ToDoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return ('<h1> I am from todo controller </h1>');
     }
 
     /**
@@ -34,7 +34,7 @@ class ChirpController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Chirp $chirp)
+    public function show(ToDo $toDo)
     {
         //
     }
@@ -42,7 +42,7 @@ class ChirpController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Chirp $chirp)
+    public function edit(ToDo $toDo)
     {
         //
     }
@@ -50,7 +50,7 @@ class ChirpController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chirp $chirp)
+    public function update(Request $request, ToDo $toDo)
     {
         //
     }
@@ -58,7 +58,7 @@ class ChirpController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chirp $chirp)
+    public function destroy(ToDo $toDo)
     {
         //
     }
