@@ -9,7 +9,10 @@ class ToDo extends Model
 {
     use HasFactory;
 
+    // protected $table = 'to_dos';
     protected $fillable = [
-        'tasks'
+        'tasks',
+        'user_id',
+        'status'
     ];
 }

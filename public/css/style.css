@@ -71,14 +71,7 @@ header h1 {
     transform: scale(0.9);
 }
 
-.alert-message.show {
-    display: block;
-    transform: scale(1);
-}
 
-.alert-message.hide {
-    display: none;
-}
 
 header .input-section {
     width: 100%;

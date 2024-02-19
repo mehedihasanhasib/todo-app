@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\ToDo;
 use Illuminate\Http\Request;
 
+
 class ToDoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // return ('<h1> I am from todo controller </h1>');
+        $id = $request->user()->id;
+        return view('tasks', [
+            'tasks' => Todo::all()->where('user_id', $id),
+        ]);
     }
 
     /**
@@ -32,9 +36,13 @@ class ToDoController extends Controller
             'tasks' => 'required|string|max:255',
         ]);
 
-        $request->user()->todos()->create($validated);
+        $id = $request->user()->id;
+        $todo = new ToDo;
+        $todo->tasks = $validated['tasks'];
+        $todo->user_id = $id;
+        $todo->save();
 
-        return redirect(route('dashboard'));
+        return redirect(route('tasks.index', ['added' => 'New task added successfully']));
     }
 
     /**
@@ -48,24 +56,50 @@ class ToDoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ToDo $toDo)
+    public function edit($id)
     {
-        //
+        $tasks = ToDo::find($id);
+        return view('edit', ['tasks' => $tasks]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ToDo $toDo)
+    public function update(Request $request, $id)
     {
-        //
+        $status = ToDo::find($id);
+
+        $new_task = $request->input('tasks');
+
+        print_r($new_task);
+
+        if (isset($new_task)) {
+            $status->update([
+                'tasks' => $new_task,
+                'status' => '0'
+            ]);
+            return redirect(route('tasks.index', ['update' => 'Task updated successfully']));
+        } else if ($status->status) {
+            $status->update([
+                'status' => '0',
+            ]);
+            return redirect(route('tasks.index', ['update' => 'Status updated successfully']));
+        } else {
+            $status->update([
+                'status' => '1',
+            ]);
+            return redirect(route('tasks.index', ['update' => 'Status updated successfully']));
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ToDo $toDo)
+    public function destroy($id)
     {
-        //
+        $task = ToDo::find($id);
+        $task->delete();
+
+        return redirect(route('tasks.index', ['deleted' => 'Task deleted successfully']));
     }
 }

@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('to_dos', function (Blueprint $table) {
             $table->id();
             $table->string('tasks');
-            $table->unsignedBigInteger('user_id');
+            $table->boolean('status')->default(false);
+            $table->unsignedBigInteger('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
